@@ -5,12 +5,15 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,7 +38,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Jetpack1Theme {
-                SimpleCounterBtn()
+                ColumnTest2()
             }
         }
     }
@@ -97,10 +100,57 @@ fun SimpleCounterBtn() {
     }
 }
 
+@Composable
+fun ColumnTest1() {
+    Text(
+        text = "안녕하세요1",
+        fontSize = 30.sp
+    )
+    Text(
+        text = "반갑습니다1",
+        fontSize = 30.sp,
+        modifier = Modifier.padding(top = 50.dp)
+    )
+    Text(
+        text = "반갑습니다2",
+        fontSize = 30.sp,
+        modifier = Modifier.padding(top = 100.dp)
+    )
+    // -> 비효율적임
+
+    // column -> 세로로 줄 세워서 배치
+    // spacer / divider
+}
+
+@Composable
+fun ColumnTest2() {
+    Column(
+        modifier = Modifier.padding(30.dp)
+    ) {
+        Text(
+            text = "안녕하세요1",
+            fontSize = 30.sp
+        )
+        Spacer(modifier = Modifier.padding(30.dp))
+        Divider(
+            thickness = 4.dp,
+            color = Color.Blue
+        )
+        Text(
+            text = "안녕하세요2",
+            fontSize = 30.sp
+        )
+        Text(
+            text = "안녕하세요3",
+            fontSize = 30.sp
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Jetpack1Theme {
-        MyBtn()
+        ColumnTest2()
     }
 }
