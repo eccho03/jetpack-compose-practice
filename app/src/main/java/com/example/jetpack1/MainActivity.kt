@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,7 +52,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Jetpack1Theme {
-                BoxExample()
+                RowTest()
             }
         }
     }
@@ -346,10 +347,37 @@ fun BoxExample() {
         }
     }
 }
+
+@Composable
+fun RowTest() {
+    Row(
+        modifier = Modifier.fillMaxSize().background(Color.Gray),
+        horizontalArrangement = Arrangement.SpaceEvenly, // 가로로 동일한 간격
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Text(
+            text = "Item1",
+            style = TextStyle(background = Color.Blue),
+            fontSize = 30.sp
+        )
+        Text(
+            text = "Item2",
+            style = TextStyle(background = Color.Red),
+            fontSize = 30.sp
+
+        )
+        Text(
+            text = "Item3",
+            style = TextStyle(background = Color.Green),
+            fontSize = 30.sp
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Jetpack1Theme {
-        BoxExample()
+        RowTest()
     }
 }
