@@ -1,10 +1,12 @@
 package com.example.jetpack1
 
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,12 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.jetpack1.ui.theme.Jetpack1Theme
 
 class MainActivity : ComponentActivity() {
@@ -44,7 +48,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Jetpack1Theme {
-                MyTextField3()
+                MyImageTest2()
             }
         }
     }
@@ -234,10 +238,27 @@ fun MyTextField3() {
     }
 }
 
+@Composable
+fun MyImageTest1() {
+    Image(
+        painter = painterResource(id = R.drawable.bok),
+        contentDescription = "bok"
+    )
+}
+
+// https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20230306_241%2F1678084896699VbyT8_JPEG%2F39045842907841710_242237626.jpg&type=a340
+@Composable
+fun MyImageTest2() {
+    AsyncImage(model = "https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20230306_241%2F1678084896699VbyT8_JPEG%2F39045842907841710_242237626.jpg&type=a340",
+        contentDescription = "사랑하는 라이언",
+        modifier = Modifier.fillMaxSize()
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Jetpack1Theme {
-        MyTextField3()
+        MyImageTest2()
     }
 }
