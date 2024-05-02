@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -56,7 +58,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Jetpack1Theme {
-                ColumnRowTest2()
+
+                Column() {
+                    CardTest("1")
+                    CardTest("2")
+                    CardTest("3")
+                    CardTest("4")
+                }
             }
         }
     }
@@ -489,10 +497,42 @@ fun ColumnRowTest2() {
     }
 }
 
+@Composable
+fun CardTest(txt: String) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .height(100.dp)
+        .padding(10.dp),
+        // 그림자 효과
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 10.dp
+        ),
+        shape = RoundedCornerShape(30.dp),
+        border = BorderStroke(1.dp, Color.Black)
+    ) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(Color.LightGray),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = txt,
+                fontSize = 30.sp,
+                color = Color.Black
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Jetpack1Theme {
-        ColumnRowTest2()
+        Column() {
+            CardTest("1")
+            CardTest("2")
+            CardTest("3")
+            CardTest("4")
+        }
     }
 }
