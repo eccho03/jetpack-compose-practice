@@ -3,6 +3,7 @@ package com.example.jetpack1
 import android.media.Image
 import android.os.Bundle
 import android.util.Log
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import com.example.jetpack1.ui.theme.Jetpack1Theme
 
@@ -59,12 +61,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                Column() {
-                    CardTest("1")
-                    CardTest("2")
-                    CardTest("3")
-                    CardTest("4")
-                }
+                MyWebView("https://www.youtube.com/")
             }
         }
     }
@@ -524,15 +521,26 @@ fun CardTest(txt: String) {
     }
 }
 
+// WebView
+@Composable
+fun MyWebView(url: String) {
+    AndroidView(factory = {
+        WebView(it).apply {
+            loadUrl(url)
+        }
+    })
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Jetpack1Theme {
-        Column() {
-            CardTest("1")
-            CardTest("2")
-            CardTest("3")
-            CardTest("4")
-        }
+//        Column() {
+//            CardTest("1")
+//            CardTest("2")
+//            CardTest("3")
+//            CardTest("4")
+//        }
+        MyWebView("https://www.daum.net/")
     }
 }
