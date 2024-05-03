@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MyWebView("https://www.youtube.com/")
+                MySurface2()
             }
         }
     }
@@ -531,6 +531,60 @@ fun MyWebView(url: String) {
     })
 }
 
+/* Surface : 컨텐츠를 담아놓는 컨테이너
+ * A surface container using the 'background' color from the theme
+ * Text / Button / Box / Surface */
+@Composable
+fun MySurface1() {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        color = Color.Red,
+        shape = RoundedCornerShape(20.dp),
+        shadowElevation = 20.dp
+    ) {
+        Button(
+            onClick = {  },
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = Color.Green
+            )
+            ) {
+            Text(text = "클릭해보세요")
+        }
+    }
+}
+
+@Composable
+fun MySurface2() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.LightGray,
+        border = BorderStroke(2.dp, Color.Red),
+        contentColor = Color.Blue
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Surface(
+                modifier = Modifier
+                    .size(200.dp),
+                color = Color.Red
+            ) {
+                Text(text = "This is Jetpack compose")
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "This is Jetpack Compose Ex"
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -541,6 +595,7 @@ fun GreetingPreview() {
 //            CardTest("3")
 //            CardTest("4")
 //        }
-        MyWebView("https://www.daum.net/")
+//        MyWebView("https://www.daum.net/")
+        MySurface2()
     }
 }
