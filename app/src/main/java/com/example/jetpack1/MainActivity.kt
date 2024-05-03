@@ -23,17 +23,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,7 +74,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MySurface2()
+                MyScaffoldEx()
             }
         }
     }
@@ -585,6 +598,81 @@ fun MySurface2() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyScaffoldEx() {
+    Scaffold(
+        topBar = {
+            MyTopBar()
+        },
+        floatingActionButton = {
+            MyFloatingActionButton()
+        },
+        bottomBar = {
+            MyBottomBar()
+        }
+    ) { paddingValues ->
+        Surface(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
+
+            Text(text = "this is content")
+
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyTopBar() {
+    TopAppBar(
+        title = {
+            Text(text = "Main")
+        },
+
+        navigationIcon = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Default.Add, contentDescription = "add")
+            }
+        },
+        actions = {
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Btn")
+            }
+        },
+        colors = TopAppBarDefaults.smallTopAppBarColors(Color.Red)
+    )
+}
+
+@Composable
+fun MyFloatingActionButton() {
+    FloatingActionButton(onClick = { /*TODO*/ }) {
+        Icon(Icons.Default.Menu, contentDescription = "Menu")
+    }
+}
+
+@Composable
+fun MyBottomBar() {
+    BottomAppBar(
+        containerColor = Color.Red
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Default.Home, contentDescription = "home")
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Default.Favorite, contentDescription = "Favorite")
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Default.Settings, contentDescription = "Settings")
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -596,6 +684,6 @@ fun GreetingPreview() {
 //            CardTest("4")
 //        }
 //        MyWebView("https://www.daum.net/")
-        MySurface2()
+        MyScaffoldEx()
     }
 }
