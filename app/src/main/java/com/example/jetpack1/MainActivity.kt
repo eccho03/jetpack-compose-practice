@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -74,7 +76,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MyScaffoldEx()
+                MyLazyColumnEx()
             }
         }
     }
@@ -673,6 +675,25 @@ fun MyBottomBar() {
     }
 }
 
+@Composable
+fun MyLazyColumnEx() {
+    val textList = listOf(
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    )
+    
+    LazyColumn {
+        items(textList) { item ->
+            Text(
+                text = item,
+                fontSize = 60.sp,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -684,6 +705,6 @@ fun GreetingPreview() {
 //            CardTest("4")
 //        }
 //        MyWebView("https://www.daum.net/")
-        MyScaffoldEx()
+        MyLazyColumnEx()
     }
 }
