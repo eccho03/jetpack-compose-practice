@@ -38,11 +38,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -78,7 +80,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MyLazyRowEx()
+                MyProcessIndicator()
             }
         }
     }
@@ -718,6 +720,41 @@ fun MyLazyRowEx() {
         }
     }
 }
+
+@Composable
+fun MyProcessIndicator() {
+    var progress by remember { mutableStateOf(0.0f) }
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = {
+            if (progress < 1.0f) // progress의 최대 사이즈 설정 -> 초과하지 않도록
+                progress += 0.1f
+        }) {
+            Text(
+                text = "행복게이지",
+                fontSize = 30.sp
+            )
+        }
+
+        Spacer(modifier = Modifier.size(30.dp)) // 약간의 여백 주기
+
+        LinearProgressIndicator(
+            progress = progress,
+            modifier = Modifier.height(10.dp),
+            color = Color.Red,
+            trackColor = Color.Cyan
+        )
+
+
+        CircularProgressIndicator(
+            progress = progress,
+            color = Color.Red
+        )
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -729,6 +766,6 @@ fun GreetingPreview() {
 //            CardTest("4")
 //        }
 //        MyWebView("https://www.daum.net/")
-        MyLazyRowEx()
+        MyProcessIndicator()
     }
 }
