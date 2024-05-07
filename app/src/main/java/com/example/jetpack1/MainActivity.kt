@@ -11,6 +11,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -76,7 +78,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MyLazyColumnEx()
+                MyLazyRowEx()
             }
         }
     }
@@ -675,6 +677,9 @@ fun MyBottomBar() {
     }
 }
 
+/* 많은 수의 항목이나 길이를 알 수 없는 목록 표시할 때
+*  Column을 사용하면 모든 항목이 구성되어서 성능 문제가 발생할 수 있음
+*  따라서 지연 목록 즉 lazy column을 사용한다.*/
 @Composable
 fun MyLazyColumnEx() {
     val textList = listOf(
@@ -694,6 +699,25 @@ fun MyLazyColumnEx() {
         }
     }
 }
+
+@Composable
+fun MyLazyRowEx() {
+    val textList = listOf(
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    )
+
+    LazyRow {
+        items(textList) { item ->
+            Text(
+                text = item,
+                fontSize = 100.sp,
+                modifier = Modifier.clickable {
+                    println("Clicked item : $item")
+                }
+            )
+        }
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -705,6 +729,6 @@ fun GreetingPreview() {
 //            CardTest("4")
 //        }
 //        MyWebView("https://www.daum.net/")
-        MyLazyColumnEx()
+        MyLazyRowEx()
     }
 }
