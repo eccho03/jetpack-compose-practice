@@ -49,6 +49,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
@@ -81,7 +82,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MyTextArea3()
+                MyShowHideEx1()
             }
         }
     }
@@ -818,6 +819,78 @@ fun MyTextFormat2(content : @Composable () -> Unit) {
         content()
     }
 }
+
+// 버튼을 클릭하면 새로운 버튼이 나오는 것
+@Composable
+fun MyShowHideEx1() {
+    var isButtonVisible by remember { mutableStateOf(false) }
+
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Button(
+            onClick = {
+            isButtonVisible = !isButtonVisible //true면 false , false면 true 값이 들어가도록 설정
+            println(isButtonVisible)
+            }
+        ) {
+            if(isButtonVisible) {
+                Text(
+                    text = "숨기기",
+                    fontSize = 50.sp
+                )
+            } else {
+                Text(
+                    text = "보이기",
+                    fontSize = 50.sp
+                )
+            }
+        }
+
+        if (isButtonVisible) {
+            Button(onClick = { }) {
+                Text(
+                    text = "짠짠짠",
+                    fontSize = 50.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MyShowHideEx2() {
+    var switchState by remember {
+        mutableStateOf(false)
+    }
+
+    Column (
+        modifier = Modifier.padding(20.dp)
+    ) {
+        Switch (
+            checked = switchState,
+            onCheckedChange = { checked ->
+                switchState = checked
+            }
+        )
+
+        Text(
+            text = if (switchState) "ON" else "OFF",
+            fontSize = 100.sp
+        )
+
+        if (switchState) {
+            Button(onClick = {}) {
+                Text(
+                    text = "짠짠짠",
+                    fontSize = 50.sp
+                )
+            }
+        }
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -829,6 +902,6 @@ fun GreetingPreview() {
 //            CardTest("4")
 //        }
 //        MyWebView("https://www.daum.net/")
-        MyTextArea3()
+        MyShowHideEx2()
     }
 }
