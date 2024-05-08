@@ -68,6 +68,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -80,7 +81,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MyProcessIndicator()
+                MyTextArea3()
             }
         }
     }
@@ -755,6 +756,68 @@ fun MyProcessIndicator() {
         )
     }
 }
+
+@Composable
+fun MyTextArea1() {
+
+    Column() {
+        Text(
+            text = "안녕",
+            fontSize = 100.sp,
+            color = Color.Red
+        )
+        Text(
+            text = "나는",
+            fontSize = 100.sp,
+            color = Color.Gray
+        )
+        Text(
+            text = "누구야",
+            fontSize = 100.sp,
+            color = Color.Green
+        )
+    }
+}
+
+@Composable
+fun MyTextArea2() {
+    Column {
+        MyTextFormat1("안녕", 100.sp, Color.Red)
+        MyTextFormat1("나는", 100.sp, Color.Green)
+        MyTextFormat1("누구야", 100.sp, Color.Gray)
+    }
+}
+
+@Composable
+fun MyTextFormat1(text : String, fontSize : TextUnit, color : Color) {
+    Text(
+        text = text,
+        fontSize = fontSize,
+        color = color
+    )
+}
+
+@Composable
+fun MyTextArea3() {
+    MyTextFormat2 {
+        Text(
+            text = "안녕",
+            fontSize = 100.sp,
+            color = Color.Red
+        )
+    }
+}
+
+@Composable
+fun MyTextFormat2(content : @Composable () -> Unit) {
+    Column {
+        content()
+        content()
+        content()
+        content()
+        content()
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
@@ -766,6 +829,6 @@ fun GreetingPreview() {
 //            CardTest("4")
 //        }
 //        MyWebView("https://www.daum.net/")
-        MyProcessIndicator()
+        MyTextArea3()
     }
 }
