@@ -60,6 +60,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -81,6 +82,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.jetpack1.ui.theme.Jetpack1Theme
+import kotlinx.coroutines.launch
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,7 +94,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MyNav2(navHostController = rememberNavController())
+//                MyNav2(navHostController = rememberNavController())
+                Retrofit()
             }
         }
     }
@@ -1028,6 +1035,56 @@ fun MyNav2(navHostController: NavHostController) {
         }
         composable("myNumberScreen/{number}") { navBackStackEntry -> 
             MyNumberScreen(number = navBackStackEntry.arguments?.getString("number"))
+        }
+    }
+}
+
+data class Post(
+    val userId : Int,
+    val id : Int,
+    val title : String,
+    val body : String
+)
+
+object RetrofitInstance {
+    val BASE_URL = "https://jsonplaceholder.typicode.com/"
+
+    val client = Retrofit
+        .Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    fun getInstance() : Retrofit {
+        return client
+    }
+}
+
+interface MyApi {
+
+    @GET("post/1")
+    suspend fun getPost1() : Response<Post>
+}
+
+@Composable
+fun Retrofit() {
+
+    val coroutineScope = rememberCoroutineScope()
+    val retrofitInstance = RetrofitInstance.getInstance().create(MyApi::class.java)
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(
+            onClick = {
+                coroutineScope.launch {
+                    val response = retrofitInstance.getPost1()
+                    Log.d("MainActivity", response.body().toString())
+                }
+            }
+        ) {
+            Text(text = "CALL API")
         }
     }
 }
