@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -86,7 +88,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Jetpack1Theme {
 
-                MyNav()
+                MyNav2(navHostController = rememberNavController())
             }
         }
     }
@@ -975,6 +977,57 @@ fun MyNav() {
         }
         composable("myScreen3") {
             MyScreen3(navController = navController)
+        }
+    }
+}
+
+@Composable
+fun MyGridScreen(navHostController: NavHostController) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3), // 3줄씩 나오도록
+        modifier = Modifier.padding(20.dp)
+    ) {
+        items(15) { number ->
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .border(1.dp, Color.Black)
+                    .clickable {
+                        navHostController.navigate("myNumberScreen/$number")
+                    }
+            ) {
+                Text(
+                    text = number.toString(),
+                    fontSize = 30.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MyNumberScreen(number : String?) {
+    Box (
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text (
+            text = number.toString(),
+            fontSize = 70.sp
+        )
+    }
+}
+
+@Composable
+fun MyNav2(navHostController: NavHostController) {
+    NavHost(navController = navHostController, startDestination = "myGridScreen") {
+        composable("myGridScreen") {
+            MyGridScreen(navHostController)
+        }
+        composable("myNumberScreen/{number}") { navBackStackEntry -> 
+            MyNumberScreen(number = navBackStackEntry.arguments?.getString("number"))
         }
     }
 }
